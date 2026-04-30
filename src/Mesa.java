@@ -4,8 +4,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Mesa {
-    private Lock[] garfos;
-    private Semaphore semaforoMesa;
+    private final Lock[] garfos;
+    private final Semaphore semaforoMesa;
 
     public Mesa(int numFilosofos) {
         garfos = new ReentrantLock[numFilosofos];

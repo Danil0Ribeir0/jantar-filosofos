@@ -12,12 +12,12 @@ public class Filosofo extends Thread {
     }
 
     private void pensar() throws InterruptedException {
-        System.out.println("Filósofo " + id + " começou a PENSAR.");
+        visualizadorConsole.atualizar(id, visualizadorConsole.PENSANDO);
         Thread.sleep(random.nextInt(3000) + 1000);
     }
 
     private void comer() throws InterruptedException {
-        System.out.println("Filósofo " + id + " conseguiu COMER.");
+        visualizadorConsole.atualizar(id, visualizadorConsole.COMENDO);
         Thread.sleep(random.nextInt(4000) + 2000);
     }
 
@@ -27,24 +27,25 @@ public class Filosofo extends Thread {
             while (true) {
                 pensar();
 
-                System.out.println("Filósofo " + id + " está TENTANDO pegar os garfos.");
+                visualizadorConsole.atualizar(id, visualizadorConsole.TENTANDO);
 
                 long TEMPO_MAXIMO_FOME = 8000;
                 boolean conseguiuComer = mesa.pegarGarfos(id, TEMPO_MAXIMO_FOME);
 
                 if (!conseguiuComer) {
-                    System.out.println("ALERTA: Filósofo " + id + " esperou tempo demais e MORREU DE FOME (Starvation)!");
+                    visualizadorConsole.atualizar(id, visualizadorConsole.MORTO);
+                    System.out.println("\nALERTA: Filósofo " + id + " esperou tempo demais e MORREU DE FOME (Starvation)!");
                     break;
                 }
 
                 comer();
 
-                System.out.println("Filósofo " + id + " está DEVOLVENDO os garfos.");
+                visualizadorConsole.atualizar(id, visualizadorConsole.DEVOLVENDO);
                 mesa.devolverGarfos(id);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            System.out.println("Filósofo " + id + " foi interrompido.");
+            System.out.println("\nFilósofo " + id + " foi interrompido.");
         }
     }
 }
